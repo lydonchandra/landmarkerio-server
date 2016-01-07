@@ -3,7 +3,6 @@ from os.path import join
 import sys
 import versioneer
 
-<<<<<<< HEAD
 install_requires = ['menpo>=0.6,<0.7',
                     'menpo3d>=0.3,<=0.4',
                     'menpofit>=0.2.0,<=0.3',
