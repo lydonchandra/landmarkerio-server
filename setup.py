@@ -3,8 +3,11 @@ from os.path import join
 import sys
 import versioneer
 
+<<<<<<< HEAD
 install_requires = ['menpo>=0.6,<0.7',
-                    'menpo3d>=0.3,<0.4',
+                    'menpo3d>=0.3,<=0.4',
+                    'menpofit>=0.2.0,<=0.3',
+                    'menpodetect>=0.2.0,<=0.3',
                     'Flask>=0.10.1',
                     'Flask-RESTful>=0.2.12',
                     'CherryPy>=3.8.0',
@@ -35,6 +38,6 @@ setup(name='landmarkerio',
       scripts=[join('landmarkerio', 'lmio'),
                join('landmarkerio', 'lmioserve'),
                join('landmarkerio', 'lmiocache'),
-               join('landmarkerio', 'lmioconvert')]
+               join('landmarkerio', 'lmioconvert'),
+               join('landmarkerio', 'lmiomodel')]
       )
-
