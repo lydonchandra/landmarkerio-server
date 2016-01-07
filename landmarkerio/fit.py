@@ -15,9 +15,9 @@ import numpy as np
 import menpo.io as mio
 from menpo.feature import fast_dsift
 from menpo.image import MaskedImage
-from menpofit.aam import LucasKanadeAAMFitter
+from menpofit.aam import LucasKanadeAAMFitter, PatchAAM
 from menpo.transform import AlignmentSimilarity
-from menpofit.aam import AAMBuilder
+# from menpofit.aam import AAMBuilder
 from menpo.io.input.landmark import _parse_ljson_v2
 from menpo.landmark.base import LandmarkGroup
 from menpodetect import load_dlib_frontal_face_detector
@@ -71,11 +71,34 @@ def build_model(name, training_dir, group, target_dir,
     if verbose:
         print("\nTraining AAM")
 
-    aam = AAMBuilder(
-        features=fast_dsift, normalization_diagonal=normalization_diagonal,
-        n_levels=n_levels, downscale=downscale, scaled_shape_models=False,
-        max_appearance_components=None
-    ).build(images, group=group, verbose=verbose)
+    # aam = AAMBuilder(
+    #     features=fast_dsift, normalization_diagonal=normalization_diagonal,
+    #     n_levels=n_levels, downscale=downscale, scaled_shape_models=False,
+    #     max_appearance_components=None
+    # ).build(images, group=group, verbose=verbose)
+
+    aam = PatchAAM(
+        images,
+        group=group,
+        verbose=True,
+        holistic_features=fast_dsift,
+        diagonal=normalization_diagonal,
+        max_appearance_components=150,
+        max_shape_components=15,
+        scales=(0.25, 0.5, 1.0)
+    )
+
+
+    # aam = PatchAAM(
+    #     training_images,
+    #     group='PTS',
+    #     verbose=True,
+    #     holistic_features=float32_fast_dsift,
+    #     diagonal=150,
+    #     max_appearance_components=150,
+    #     max_shape_components=15,
+    #     scales=(0.25, 0.5, 1.0)
+    # )
 
     # Store pickled versions on disk
     with open(p.join(model_dir, 'aam.pickled'), 'w') as aam_f:
